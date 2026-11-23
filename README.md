@@ -8,17 +8,6 @@ The underlying catalog contains 4,753 distinct game quest IDs. The journal and z
 
 [Design diagrams (PDF)](docs/design-schema.pdf) · [Routing algorithms](docs/algorithms.md) · [Verification report](docs/verification.md)
 
-## Run the website
-
-Use Node.js 20 or later. All application code, Lua modules, fonts, illustrations and the Wasmoon WebAssembly runtime ship in this checkout. No package installation or account is required.
-
-```sh
-node tools/build.mjs
-node tools/serve.mjs
-```
-
-Open **http://127.0.0.1:4173/**. On Windows, double-click **Start Atlas.cmd** to start the server and open the planner. Leave the server running while using the site. Static hosts can serve the contents of `dist/` over HTTP or HTTPS. Opening index.html through a file URL is unsupported because the worker loads local modules over HTTP.
-
 ## Guided walkthrough
 
 1. In Azeroth, inspect **James Hyal** and **The Night Watch**. Open **Journal → Travel style** and choose **On foot**. The itinerary explains the blocked crossing. Choose **Mixed travel** to keep the crossing and use transport on approximately half the eligible trips. **Full transport** allows transport for every eligible trip. Each choice recalculates the ETA. Compare the completed and upcoming legs in **Travel log** while playing or seeking. Select a map marker to set your start or add an independent travel stop.
@@ -81,4 +70,4 @@ The input shape is based on published build 69977 captures and Forever API defin
 
 ## Acknowledgments
 
-This project builds on the [Wayfarer's Atlas addon](https://github.com/tugra8005/wayfarers-atlas) and studies [Savaş Takan's original Atlas algorithm](https://github.com/savastakan/atlas).
+This project builds on [Savaş Takan's original Atlas algorithm](https://github.com/savastakan/atlas).
