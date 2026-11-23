@@ -1,0 +1,2 @@
+lupa.lua51 matches 3 complete browser route payloads; quest-log capability and capture fixtures passed
+lupa.luajit21 matches 3 complete browser route payloads; quest-log capability and capture fixtures passed

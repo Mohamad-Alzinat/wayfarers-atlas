@@ -1,0 +1,29 @@
+Lua 5.1	LuaJIT 2.1.1774896198
+ok   Lua Atlas prints the same test suite as Atlas.java
+ok   Atlas walks are contiguous
+ok   Atlas.java drops the last edge, and that edge is then uncovered
+ok   CPP matches brute force on small weighted graphs
+ok   CPP walk is contiguous, starts at 0, covers every edge, weight adds up
+ok   Weighted Atlas covers everything and is never cheaper than the optimum
+ok   Weighted Atlas uses a teleport to reach an otherwise unreachable part
+ok   Rural postman equals the exact CPP when every edge is required
+ok   Route legs add up to the route time
+ok   Factions only use their own flight masters and transports
+ok   Mage teleports only for mages; hearthstone at most once
+ok   Hearthstone never makes a route slower
+ok   Walking never crosses between continents
+ok   Map coverage walks are valid and cover every flight link
+ok   Skyborne start: both factions reach Dalaran, only Horde takes the Skywatcher skyship
+ok   Beta-only routes are used only when asked for
+ok   Riverglades flight masters, Powderfuse boat and Menethil loop
+ok   Walled-off zones are entered only through their pass
+ok   Druids: Teleport: Moonglade and the druid-only flight master
+ok   Several one-use teleports: each spent at most once, devices need the item
+ok   Exact tour equals brute force over all orders (with precedence and hearthstone)
+ok   Quest chains: Raising Spirits is picked up only after Hammerfall is handed in
+ok   Every sample quest names places on the map
+ok   Tour orders respect accept -> objective -> turn-in
+ok   Heuristic is never better than exact
+ok   Addon loads and plans with a stubbed WoW API
+
+26 passed, 0 failed

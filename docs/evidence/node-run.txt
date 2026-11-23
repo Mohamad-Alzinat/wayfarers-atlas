@@ -1,0 +1,36 @@
+✔ the indexed catalog and complete repository projection have unique identities (2.4595ms)
+✔ ocean crossing requires a permitted method and never marks a staging quest complete (25.7729ms)
+✔ road distance and costs use profile speed, faction and flight discoveries (16.1927ms)
+✔ ferries, zeppelins, skyships and fixed portals follow their own rules (11.7417ms)
+✔ mage learned spells and separate item permissions gate teleports (9.3506ms)
+✔ atlas contract: empty, single, multiple, coverage, totals, continuity (21.9554ms)
+✔ atlas errors, disconnected destination and missing dependency (7.3571ms)
+✔ atlas handles completed predecessor, partial count and cross-quest precedence (9.3724ms)
+✔ nearest contract: empty, single, multiple, coverage, totals, continuity (8.3177ms)
+✔ nearest errors, disconnected destination and missing dependency (4.6279ms)
+✔ nearest handles completed predecessor, partial count and cross-quest precedence (6.4837ms)
+✔ exact contract: empty, single, multiple, coverage, totals, continuity (8.221ms)
+✔ exact errors, disconnected destination and missing dependency (3.3746ms)
+✔ exact handles completed predecessor, partial count and cross-quest precedence (5.8949ms)
+✔ one-way and portal gates filter Dijkstra travel; fixed optimum is known (1.8773ms)
+✔ globally budgeted one-use hearth across a chain; exact matches hand calculation (1.225ms)
+✔ exact cap, invalid coordinates, bad weights, omitted objective and zero visits (6.518ms)
+✔ validator passes in order and stops at first failure; inherited creator calls override (0.2871ms)
+✔ commands, injected fakes, subscriptions, undo and stale asynchronous response (0.5127ms)
+✔ comparison calculates measured gap on identical input and suppresses zero denominator (11.9653ms)
+✔ playback consumes actual returned paths, reconstructs progress when seeking backward (2.9837ms)
+✔ import bounds, dependency consistency, hostile keys and unchanged current state (1.836ms)
+✔ zone transform is independent of viewport and state rules reject early turn-in (0.0973ms)
+✔ local service-chain lookahead can choose a different first quest from nearest (12.3729ms)
+✔ repeated calls release the VM result slot (395.3591ms)
+✔ three presets produce distinct actual edges and durations (8.5114ms)
+✔ mixed reserves necessary crossings and rounds odd trip counts up (2.2559ms)
+✔ journal excludes opposing and unclassified catalog records on both sides (0.2091ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 538.2104

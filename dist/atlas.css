@@ -1,0 +1,353 @@
+#routeLines [data-status="upcoming"] polyline:first-of-type {
+  stroke-dasharray: 3 8;
+  stroke-width: 5;
+  stroke-linecap: butt;
+}
+.zoneAtlas {
+  width: min(100%, 350px);
+  background: #233a31;
+  border: 1px solid #8c835d;
+  margin: 12px auto;
+}
+.zoneAtlas svg {
+  display: block;
+  width: 100%;
+}
+.zoneAtlas [data-pin] {
+  cursor: pointer;
+}
+.zoneAtlas [data-pin]:focus {
+  outline: 1px solid white;
+}
+.pointList {
+  max-height: 200px;
+  overflow: auto;
+}
+.pointList button {
+  display: block;
+  text-align: left;
+  width: 100%;
+  padding: 5px 8px;
+}
+.pointList small {
+  display: block;
+}
+#mobileTravel {
+  display: none;
+}
+@media (max-width: 1199px) {
+  #plannerNav {
+    display: none;
+  }
+  #mobileTravel {
+    display: inline-flex;
+    margin-left: auto;
+  }
+  .mapFooter #legend {
+    margin-left: 0;
+  }
+}
+.mapTop {
+  gap: 5px;
+}
+.mapTop h2 {
+  margin-right: auto;
+  white-space: nowrap;
+}
+.mapTop .mapLayer {
+  margin: 0;
+  white-space: nowrap;
+}
+.mapCanvas {
+  background: #b8a878;
+}
+.mapCanvas.worldOcean {
+  background-color: #87a799;
+}
+@media (max-width: 520px) {
+  .worldOcean .mapName {
+    display: none;
+  }
+}
+.labelLeader {
+  fill: none;
+  stroke: #665a42;
+  stroke-width: 1;
+  pointer-events: none;
+}
+.cityArt {
+  overflow: hidden;
+  pointer-events: none;
+}
+.placeArt {
+  fill: none;
+  stroke: #675944;
+  stroke-width: 0.85;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+.placeTarget {
+  fill: transparent;
+  stroke: transparent;
+}
+.marker.minor:hover .placeTarget,
+.marker.minor:focus .placeTarget {
+  fill: #eedca580;
+  stroke: #68583f;
+}
+.marker .localName {
+  font:
+    italic 13px Georgia,
+    serif;
+  fill: #443d2b;
+  stroke: #ebdab1;
+  stroke-width: 2.4px;
+}
+.marker .stopName {
+  font:
+    700 16px Georgia,
+    serif;
+  stroke-width: 3px;
+}
+.revealName {
+  display: none;
+}
+.marker:focus .revealName,
+.marker:hover .revealName {
+  display: inline;
+}
+.marker .cityName {
+  font:
+    700 19px Georgia,
+    serif;
+  font-variant: small-caps;
+  letter-spacing: 0.5px;
+  fill: #2c3028;
+  stroke: #f3e4b6;
+  stroke-width: 2.8px;
+  stroke-linejoin: round;
+  paint-order: stroke;
+  pointer-events: none;
+}
+.cityTarget {
+  fill: transparent;
+  stroke: transparent;
+  stroke-width: 2;
+}
+.city:focus .cityTarget,
+.city:hover .cityTarget {
+  fill: #edda9250;
+  stroke: #624b30;
+}
+.cityBadge circle {
+  fill: #344735;
+  stroke: #f5d788;
+  stroke-width: 1.8;
+}
+.cityBadge text {
+  fill: #ffebaf;
+  font:
+    700 14px Georgia,
+    serif;
+}
+.city.current .cityBadge circle {
+  fill: #845023;
+  stroke: #fff399;
+}
+.city.reached .cityBadge circle {
+  fill: #24614d;
+}
+.mapPanel.expanded {
+  position: fixed !important;
+  inset: 1vh 1vw;
+  width: 98vw !important;
+  height: 98dvh !important;
+  z-index: 25;
+  display: flex !important;
+  box-shadow: 0 0 0 3vw #101813df;
+}
+.mapName {
+  background: #eadcabce;
+  padding: 4px 8px;
+  border-radius: 2px;
+}
+.mapName strong {
+  font-size: 23px;
+}
+.mapName span {
+  font-size: 9px;
+}
+.mapProgress,
+.journeyStatus {
+  background: #202a24;
+  color: #e1d8bb;
+  padding: 6px 12px;
+  font-size: 13px;
+  line-height: 1.3;
+}
+.mapProgress {
+  border-top: 1px solid #806f4a;
+}
+.mapFooter .legDone,
+.mapFooter .legNow,
+.mapFooter .legNext {
+  display: inline;
+  font-weight: bold;
+  font-style: normal;
+}
+.legDone {
+  color: #9edeba;
+}
+.legNow {
+  color: #f0cd77;
+}
+.legNext {
+  color: #e4dac1;
+}
+.marker.reached .pin {
+  fill: #24614d;
+  stroke: #f1efcc;
+}
+.marker.current .pin {
+  fill: #845023;
+  stroke: #fff399;
+  stroke-width: 3;
+}
+
+.travelChoice {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.travelChoice small {
+  color: #d9c89c;
+}
+.stopState {
+  font-weight: 700;
+  color: #d6d1ba;
+}
+.complete .stopState {
+  color: #a3d2ae;
+}
+.active .stopState {
+  color: #ffe19d;
+}
+.zonePlot {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  gap: 12px;
+}
+.zonePlot svg {
+  width: 100px;
+  background: #28382f;
+  border: 1px solid #a89462;
+}
+.zonePlot figcaption,
+#catalogCredit {
+  font-size: 12px;
+}
+.questReference details {
+  margin: 8px 0;
+}
+#catalogCredit {
+  display: block;
+  color: #d5ccb0;
+  margin: 0 3px 5px;
+}
+a {
+  color: #e0c17b;
+}
+#moreQuests {
+  width: 100%;
+  margin: 8px 0;
+}
+.journeyStatus {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.journeyStatus button {
+  font-size: 12px;
+  padding: 3px 6px;
+}
+.passageLog {
+  padding-left: 24px;
+}
+.passageLog li {
+  padding: 6px 0;
+  border-bottom: 1px solid #495047;
+}
+.passageLog small {
+  display: block;
+  color: #d4c8a8;
+}
+@media (max-width: 767px) {
+  .workspace[data-view="map"] {
+    display: flex;
+    height: auto;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .workspace[data-view="map"] .mapPanel {
+    display: flex;
+    order: 0;
+    height: clamp(375px, 72vw, 550px);
+  }
+  .workspace[data-view="map"] .journal {
+    display: flex;
+    order: 1;
+    height: 435px;
+  }
+  .workspace[data-view="itinerary"] {
+    min-height: 460px;
+  }
+  .mapTop {
+    padding: 5px 8px;
+  }
+  .mapTop h2 {
+    font-size: 18px;
+  }
+  .mapTop h2 .icon {
+    display: none;
+  }
+  .mapTop button {
+    font-size: 12px;
+    min-height: 32px;
+  }
+  .mapName {
+    top: 5px;
+    left: 5px;
+  }
+  .mapName strong {
+    font-size: 16px;
+  }
+  .mapTools {
+    right: 4px;
+  }
+  .mapFooter {
+    flex-wrap: wrap;
+    row-gap: 3px;
+  }
+  .mapFooter span {
+    font-size: 12px;
+  }
+  .mapProgress {
+    font-size: 12px;
+  }
+  .mapTop,
+  .mapFooter {
+    flex-shrink: 0;
+  }
+  .workspace .journalFoot {
+    display: block;
+  }
+  .mapName span,
+  .north b {
+    font-size: 8px;
+  }
+}

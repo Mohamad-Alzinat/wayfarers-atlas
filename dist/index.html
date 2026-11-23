@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#151c1a" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'"
+    />
+    <meta
+      name="description"
+      content="Select quests, plan a route and play your journey in Wayfarer's Atlas."
+    />
+    <title>Adventure Planner · Wayfarer's Atlas</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="atlas.css" />
+    <link rel="stylesheet" href="journal.css" />
+    <link rel="icon" href="assets/rose.svg" />
+  </head>
+  <body>
+    <a class="skip" href="#optimize">Skip to route planning</a>
+    <header class="top">
+      <div class="brand">
+        <img src="assets/rose.svg" alt="" /><span>Wayfarer's Atlas</span>
+      </div>
+      <nav aria-label="Main navigation">
+        <button
+          class="nav current"
+          aria-label="Journal"
+          id="plannerNav"
+          data-i="compass"
+        >
+          Journal</button
+        ><button class="nav" id="compareNav" data-i="route">
+          Route comparison</button
+        ><button class="nav" id="guideNav" data-i="book-open">
+          Field guide
+        </button>
+      </nav>
+      <button id="settings" class="settings" data-i="settings">Settings</button>
+    </header>
+    <main>
+      <section class="hero">
+        <div>
+          <div class="eyebrow">
+            <span class="rule"></span> Expedition journal
+          </div>
+          <h1>Adventure Planner</h1>
+          <p>Choose your quests, chart a route, and follow your journey.</p>
+        </div>
+        <button id="adventure" class="adventure" data-i="map">
+          Azeroth <span>World atlas</span>
+        </button>
+      </section>
+      <div class="mobileTabs" role="group" aria-label="Workspace panels">
+        <button data-tab="map" aria-label="Journal" aria-pressed="true">
+          Journal</button
+        ><button data-tab="itinerary">Itinerary</button>
+      </div>
+      <section
+        class="workspace"
+        data-view="map"
+        aria-label="Adventure workspace"
+      >
+        <aside class="journal panel" aria-label="Character and quest journal">
+          <div class="profileBand">
+            <img src="assets/ranger.webp" alt="Hooded ranger portrait" />
+            <div>
+              <div class="kicker" id="origin">Sample character</div>
+              <h2 id="charName"></h2>
+              <span id="characterLine"></span>
+            </div>
+            <button
+              class="iconbtn tiny"
+              id="editProfile"
+              aria-label="Edit character"
+              title="Edit character"
+              data-i="sliders-horizontal"
+            ></button>
+          </div>
+          <div class="journalBody">
+            <div class="paneTitle">
+              <h2 id="journalHeading" tabindex="-1" data-i="book-open">
+                Quest journal
+              </h2>
+              <button
+                class="iconbtn tiny"
+                id="filterBtn"
+                aria-label="Quest filters"
+                title="Quest filters"
+                data-i="filter"
+              ></button>
+            </div>
+            <div class="find">
+              <span data-i="search"></span
+              ><input
+                id="search"
+                aria-label="Search quests"
+                placeholder="Search quests…"
+                type="search"
+              />
+            </div>
+            <div id="filters" hidden>
+              <label>Zone<select id="zoneFilter"></select></label
+              ><label
+                >Quest status<select id="statusFilter">
+                  <option>Any status</option>
+                  <option>Available</option>
+                  <option>Active</option>
+                  <option>Locked</option>
+                  <option>Ready to turn in</option>
+                  <option>Turned in</option>
+                </select></label
+              ><label
+                >Estimated travel<select id="timeFilter">
+                  <option value="all">Any travel time</option>
+                  <option value="120">Within 2 minutes</option>
+                  <option value="300">Within 5 minutes</option>
+                </select></label
+              ><button id="zoneAll">Select visible</button>
+              <button id="deselect">Deselect all</button>
+              <button id="undo">Undo</button>
+            </div>
+            <div class="journalTabs">
+              <button id="allTab" aria-pressed="true">All quests</button
+              ><button id="selectedTab" aria-pressed="false">
+                Selected <b id="selCount">0</b>
+              </button>
+            </div>
+            <small id="catalogCredit"></small>
+            <div id="questList" class="questList"></div>
+          </div>
+          <div class="journalFoot">
+            <div class="journalTravel">
+              <button id="travelStyle" aria-haspopup="dialog">
+                <span data-i="footprints">Travel style</span
+                ><small id="currentStyle">Full transport</small>
+              </button>
+              <button
+                id="travelMethods"
+                aria-haspopup="dialog"
+                data-i="sliders-horizontal"
+              >
+                Custom
+              </button>
+            </div>
+            <button id="optimize" class="gold" data-i="route">
+              Optimize Route
+            </button>
+          </div>
+        </aside>
+        <section class="mapPanel" aria-label="Interactive regional map">
+          <div class="mapTop">
+            <h2 data-i="map">World map</h2>
+            <button id="wholeMap" class="mapLayer">Whole map</button
+            ><button id="expandMap" class="mapLayer" aria-pressed="false">
+              Expand
+            </button>
+            <button
+              class="mapLayer"
+              id="layers"
+              data-i="layers"
+              aria-expanded="false"
+            >
+              Layers
+            </button>
+          </div>
+          <div class="mapCanvas" id="mapCanvas">
+            <svg
+              id="world"
+              viewBox="0 0 1000 800"
+              preserveAspectRatio="xMidYMid meet"
+              role="group"
+              aria-label="Azeroth world map. Select a marker for location details."
+            >
+              <g id="camera">
+                <image
+                  href="assets/azeroth.webp"
+                  width="1000"
+                  height="800"
+                  preserveAspectRatio="none"
+                />
+                <g id="boundaries"></g>
+                <g id="graph"></g>
+                <g id="routeLines"></g>
+                <g id="markers"></g>
+                <g id="player" pointer-events="none"></g>
+              </g>
+            </svg>
+            <div class="mapName">
+              <span>World atlas</span><strong>Azeroth</strong>
+            </div>
+            <div id="layerMenu" class="floating" hidden></div>
+            <div id="mapTip" class="floating" hidden></div>
+            <div class="mapTools">
+              <button
+                id="zoomIn"
+                aria-label="Zoom in"
+                title="Zoom in"
+                data-i="plus"
+              ></button
+              ><button
+                id="zoomOut"
+                aria-label="Zoom out"
+                title="Zoom out"
+                data-i="minus"
+              ></button
+              ><button
+                id="fit"
+                aria-label="Fit route"
+                title="Fit route"
+                data-i="maximize-2"
+              ></button
+              ><button
+                id="recenter"
+                aria-label="Recenter on player"
+                title="Recenter on player"
+                data-i="locate-fixed"
+              ></button>
+            </div>
+            <div class="mapScale">
+              <span id="zoneReadout"></span> ·
+              <span id="zoomReadout">100%</span>
+            </div>
+            <div class="north">
+              <b>N</b><img alt="" src="assets/rose.svg" />
+            </div>
+          </div>
+          <div class="mapProgress" id="mapProgress"></div>
+          <div class="mapFooter">
+            <span><i class="legDone">✓</i> Reached</span
+            ><span><i class="legNow">➤</i> Current</span
+            ><span><i class="legNext">┄</i> Upcoming</span
+            ><button class="textbtn" id="mobileTravel">Custom</button
+            ><button class="textbtn" id="legend">Legend</button>
+          </div>
+        </section>
+        <aside class="itinerary panel">
+          <div class="paneTitle">
+            <h2 data-i="signpost">Journey itinerary</h2>
+            <button
+              id="routeSettings"
+              class="iconbtn tiny"
+              aria-label="Routing options"
+              title="Routing options"
+              data-i="sliders-horizontal"
+            ></button>
+          </div>
+          <div class="stats">
+            <div>
+              <span data-i="clock-3">Estimated time</span
+              ><strong id="eta">—</strong>
+            </div>
+            <div>
+              <span data-i="flag">Quest stops</span
+              ><strong id="stopCount">—</strong>
+            </div>
+          </div>
+          <div class="itHead">
+            <span class="kicker">Route order</span
+            ><span class="method" id="method">Atlas heuristic</span>
+          </div>
+          <div id="journeyStatus" class="journeyStatus"></div>
+          <div id="styleSummary" class="styleSummary" hidden></div>
+          <div id="stops" class="stops"></div>
+          <div class="itFoot">
+            <button id="compare" class="textbtn" data-i="route">
+              Compare routes</button
+            ><button
+              id="resetRoute"
+              class="iconbtn tiny"
+              data-i="rotate-ccw"
+              title="Reset route"
+              aria-label="Reset route"
+            ></button>
+          </div>
+        </aside>
+      </section>
+      <section class="playback" aria-label="Journey playback">
+        <div class="playTitle">
+          <span class="kicker">Journey playback</span
+          ><span class="stateLabel"
+            ><i></i><span id="playState">Ready</span></span
+          >
+        </div>
+        <div class="transport">
+          <button id="play" class="teal" data-i="play">Play Journey</button
+          ><button
+            id="prev"
+            class="iconbtn"
+            data-i="step-back"
+            aria-label="Previous stop"
+            title="Previous stop"
+          ></button
+          ><button
+            id="next"
+            class="iconbtn"
+            data-i="step-forward"
+            aria-label="Next stop"
+            title="Next stop"
+          ></button
+          ><button
+            id="restart"
+            class="iconbtn"
+            data-i="rotate-ccw"
+            aria-label="Restart journey"
+            title="Restart journey"
+          ></button>
+        </div>
+        <div class="timeline">
+          <div>
+            <span id="nowLeg">Awaiting route</span
+            ><span id="clock">0:00 / 0:00</span>
+          </div>
+          <input
+            type="range"
+            id="seek"
+            min="0"
+            max="1"
+            value="0"
+            step=".01"
+            aria-label="Journey timeline"
+          />
+        </div>
+        <label
+          class="speed"
+          title="Simulation speed · 1× = 8 modeled seconds per real second"
+          ><span>Simulation speed</span
+          ><select id="speed" aria-label="Playback speed">
+            <option value="1">1×</option>
+            <option value="2">2×</option>
+            <option value="4">4×</option>
+          </select></label
+        ><button
+          id="mobileOptimize"
+          class="mobileOptimize"
+          aria-label="Optimize Route"
+          title="Optimize Route"
+          data-i="route"
+        ></button
+        ><button
+          id="morePlay"
+          class="iconbtn"
+          data-i="sliders-horizontal"
+          aria-label="Playback options"
+          title="Playback options"
+        ></button>
+      </section>
+      <footer>
+        <span data-i="compass">Wayfarer's Atlas</span
+        ><span id="status" role="status" aria-live="polite"
+          >Opening the journal…</span
+        ><span class="offline"><i></i> Local simulation</span>
+      </footer>
+      <p class="journal-credit">Made by Mohamad Alzinat for Savaş Takan homework</p>
+    </main>
+    <dialog id="modal">
+      <div class="dialogTop">
+        <h2 id="modalTitle"></h2>
+        <button
+          id="closeModal"
+          class="iconbtn"
+          data-i="x"
+          aria-label="Close dialog"
+        ></button>
+      </div>
+      <div class="dialogBody" id="modalBody"></div>
+    </dialog>
+    <script type="module" src="js/start.mjs"></script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+PASS axe accessibility checks 27 passed, 1 manual review
+PASS initial route, worker contracts, repeated benchmark 159.0.8154.6
+PASS playback, backward seek, map keyboard marker, layers and zoom
+PASS search, selection, comparison, invalid import, client preview, placement, planning and reload
+PASS empty and unreachable route recovery states
+PASS mobile/tablet width, reduced motion, keyboard journey and zero browser errors

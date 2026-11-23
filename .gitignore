@@ -1,0 +1,8 @@
+*.class
+
+node_modules/
+.openai/
+__pycache__/
+*.pyc
+.env
+.env.local

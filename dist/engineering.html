@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Engineering field guide · Wayfarer's Atlas</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      article {
+        max-width: 920px;
+        margin: 40px auto;
+        padding: 0 18px;
+      }
+      article h1 {
+        margin: 20px 0;
+      }
+      article h2 {
+        font-size: 32px;
+        margin: 25px 0 5px;
+      }
+      article h3 {
+        font-size: 24px;
+        margin: 20px 0 6px;
+      }
+      article p {
+        margin: 10px 0;
+        color: var(--muted);
+      }
+      .diagram {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 20px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        margin-top: 12px;
+      }
+      .diagram b {
+        background: #344636;
+        padding: 8px 12px;
+        border: 1px solid #66775c;
+        font-weight: normal;
+      }
+      .diagram span {
+        color: var(--gold);
+      }
+      .flow {
+        border-left: 2px solid var(--brass);
+        padding-left: 26px;
+      }
+      .flow li {
+        margin: 12px 0;
+      }
+      code {
+        color: #d8cab1;
+      }
+      dt {
+        color: var(--gold);
+        margin-top: 10px;
+      }
+      dd {
+        margin-left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <article><p><a href="engineering/catalog-source.md">Azeroth quest catalog provenance</a> · <a href="data/CATALOG-LICENSE.md">Catalog license</a> · <a href="engineering/build_catalog.py">Catalog rebuild source</a></p>
+      <a href="./">Return to planner</a>
+      <h1>Engineering field guide</h1>
+      <p>
+        The browser and native Lua runtimes share a quest-service planner. The
+        local journal and map use the same costed route.
+      </p>
+      <h2>Components</h2>
+      <div class="diagram" aria-label="Component relationships">
+        <b>Journal commands</b><span>→</span><b>QuestPlannerFacade</b
+        ><span>→</span><b>Worker adapter</b><span>→</span
+        ><b>Lua planning service</b>
+      </div>
+      <div class="diagram">
+        <b>Route result</b><span>→</span><b>Playback checkpoints</b
+        ><span>→</span><b>Map, journal and itinerary</b>
+      </div>
+      <h2>Factory Method and Strategy</h2>
+      <p>
+        The common creator runs the object returned by its own creation method.
+        Each specialized creator supplies an interchangeable strategy.
+      </p>
+      <div class="diagram">
+        <b>Creator.run()</b><span>calls</span><b>createStrategy()</b
+        ><span>then</span><b>strategy.calculate()</b>
+      </div>
+      <dl>
+        <dt>Atlas creator</dt>
+        <dd>
+          Constructs a three-service lookahead over feasible coverage states.
+        </dd>
+        <dt>Exact creator</dt>
+        <dd>
+          Constructs a bounded precedence- and resource-aware Held–Karp solver.
+        </dd>
+        <dt>Nearest creator</dt>
+        <dd>Constructs a single-step eligible-service heuristic.</dd>
+      </dl>
+      <h2>Optimize Route</h2>
+      <ol class="flow">
+        <li>The UI executes the optimize command on the facade.</li>
+        <li>The worker passes the request to the Lua validation chain.</li>
+        <li>
+          The service graph retains unfinished activities and their
+          dependencies.
+        </li>
+        <li>
+          The chosen strategy uses Dijkstra connectors. The planner reconstructs
+          each weighted edge.
+        </li>
+        <li>
+          The facade publishes the result. Playback creates immutable progress
+          checkpoints, and the map draws the returned legs.
+        </li>
+      </ol>
+      <h2>Read the implementation</h2>
+      <p>
+        <a href="js/domain.mjs">Facade, Command and Observer</a> ·
+        <a href="engineering/planner.lua.txt"
+          >Validation chain, service transitions and strategy creators</a
+        >
+        · <a href="js/catalog.mjs">Repository</a> ·
+        <a href="js/playback.mjs">Playback controller</a> ·
+        <a href="engineering/journal.test.mjs.txt">Executable contracts</a>
+      </p>
+      <p>
+        <a href="engineering/architecture.md"
+          >Class, component and sequence diagrams with the SOLID matrix</a
+        >
+        ·
+        <a href="engineering/algorithms.md"
+          >Algorithm adaptation and proof conditions</a
+        >
+        · <a href="engineering/verification.md">Verification report</a>
+        · <a href="engineering/routing-oracle.test.mjs.txt">Independent route-cost test</a>
+      </p>
+    </article>
+  </body>
+</html>
